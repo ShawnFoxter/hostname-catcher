@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "hostname-catcher",
+  "version": "${version}",
+  "name": "hostname-catcher",
+  "description": "an utility mod designed to verify what hostname uses a player",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/hostname-catcher/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-datagen": [
+      "net.sixfurs.hostnameCatcher.client.HostnameCatcherDataGenerator"
+    ],
+    "client": [
+      "net.sixfurs.hostnameCatcher.client.HostnameCatcherClient"
+    ],
+    "main": [
+      "net.sixfurs.hostnameCatcher.HostnameCatcher"
+    ]
+  },
+  "mixins": [
+    "hostname-catcher.mixins.json",
+    {
+      "config": "hostname-catcher.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": ">=${minecraft_version}",
+    "java": ">=25"
+  }
+}
