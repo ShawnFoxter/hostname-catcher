@@ -15,8 +15,7 @@ public class HostnameCatcher implements ModInitializer {
     @Override
     public void onInitialize() {
         configManager = new ConfigManager(
-            FabricLoader.getInstance().getConfigDir().resolve("hostname-catcher.yml")
-        );
+                FabricLoader.getInstance().getConfigDir().resolve("hostname-catcher.yml"));
         configManager.load();
         ServerLoginConnectionEvents.INIT.register((handler, server) -> {
             Connection connection = ((ServerLoginPacketListenerImplAccessor) handler).getConnection();
@@ -29,8 +28,8 @@ public class HostnameCatcher implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             Connection connection = ((ServerCommonPacketListenerImplAccessor) handler).getConnection();
             String domain = ((ClientConnectionExt) connection).getDomainName();
-            System.out.println("Player " + handler.player.getName().getString() + 
-                               " connected via domain: " + domain);
+            System.out.println("Player " + handler.player.getName().getString() +
+                    " connected via: " + domain);
         });
     }
 }
