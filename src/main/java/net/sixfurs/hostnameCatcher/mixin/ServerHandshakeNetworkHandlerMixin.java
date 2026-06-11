@@ -20,8 +20,13 @@ public class ServerHandshakeNetworkHandlerMixin {
     @Inject(method = "handleIntention", at = @At("HEAD"))
     private void captureDomainName(ClientIntentionPacket packet, CallbackInfo ci) {
         String domain = packet.hostName();
-        if (domain != null && domain.contains("\0")) {
-            domain = domain.split("\0")[0];
+        if (domain != null) {
+            if (domain.contains("\0")) {
+                domain = domain.split("\0")[0];
+            }
+            if (domain.endsWith(".")) {
+                domain = domain.substring(0, domain.length() - 1);
+            }
         }
         ((ClientConnectionExt) this.connection).setDomainName(domain);
     }

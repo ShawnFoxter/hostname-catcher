@@ -34,7 +34,7 @@ public class ConfigManager {
                         for (String part : content.split(",")) {
                             String d = part.trim();
                             if (!d.isEmpty()) {
-                                allowedDomains.add(d);
+                                allowedDomains.add(normalizeDomain(d));
                             }
                         }
                     } else {
@@ -49,7 +49,7 @@ public class ConfigManager {
                             d = d.substring(1, d.length() - 1);
                         }
                         if (!d.isEmpty()) {
-                            allowedDomains.add(d);
+                            allowedDomains.add(normalizeDomain(d));
                         }
                     } else if (line.matches("^\\S+:.*")) {
                         inSection = false;
@@ -77,9 +77,21 @@ public class ConfigManager {
         }
     }
 
+    private String normalizeDomain(String d) {
+        if (d == null) {
+            return null;
+        }
+        String normalized = d.trim();
+        if (normalized.endsWith(".")) {
+            normalized = normalized.substring(0, normalized.length() - 1);
+        }
+        return normalized;
+    }
+
     public boolean isDomainAllowed(String domain) {
         if (domain == null)
             return false;
+        domain = normalizeDomain(domain);
         if (allowedDomains.isEmpty())
             return true;
         for (String allowed : allowedDomains) {
